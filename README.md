@@ -4,30 +4,17 @@ A simple, front-end Book Management App built with HTML, CSS, and Vanilla JavaSc
 This app allows users to add, edit, delete, mark as read/unread, search, and toggle dark mode. All data is stored locally in the browser using localStorage, so your books persist even after refreshing the page.
 Features
 
-Add Books: Enter book title and author to add a new book.
+1.Add Books: Enter book title and author to add a new book.
 
-Edit Books: Update the title or author of existing books.
+2.Edit Books: Update the title or author of existing books.
 
-Delete Books: Remove books from the list.
-
-Mark as Read / Unread: Keep track of which books are completed.
-
-Search: Filter books by title or author in real-time.
-
-Dark Mode: Toggle between light and dark themes.
-
-Persistent Storage: Data is saved in the browser using localStorage.
-
-Responsive Design: Works on mobile, tablet, and desktop screens.
-
-Background Image: Beautiful background with a card-style book list.
+3.Delete Books: Remove books from the list.
 
 Screenshots
 
-
 Replace screenshot.png with your actual screenshot in the repo.
 
-Installation
+**Installation**
 
 No server or backend is required. Simply follow these steps:
 
@@ -40,7 +27,6 @@ Open the project folder:
 
 cd book-management-app
 
-
 Open index.html in your browser:
 
 Double-click index.html
@@ -49,29 +35,29 @@ Or use a live server in VS Code for hot reload.
 
 Usage
 
-Enter the book title and author in the form fields.
+*Enter the book title and author in the form fields.
 
-Click Add Book to add the book to your list.
+*Click Add Book to add the book to your list.
 
-Use the Read button to mark a book as read or unread.
+*Use the Read button to mark a book as read or unread.
 
-Click Edit to update book details.
+*Click Edit to update book details.
 
-Click Delete to remove the book.
+*Click Delete to remove the book.
 
-Use the search bar to filter books by title or author.
+*Use the search bar to filter books by title or author.
 
-Click Toggle Dark Mode to switch themes.
+*Click Toggle Dark Mode to switch themes.
 
 Tech Stack
 
-HTML5
+1.HTML5
 
-CSS3
+2.CSS3
 
-Vanilla JavaScript
+3.Express 
 
-localStorage for persistence
+4.node js
 
 Folder Structure
 book-management-app/
