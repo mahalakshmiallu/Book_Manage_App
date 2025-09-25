@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>📚 Book Management App</title>
 <style>
-  /* Root variables for light and dark modes */
   :root {
     --bg-color: rgba(255,255,255,0.85);
     --text-color: #1f2937;
@@ -13,6 +12,7 @@
     --add-btn: #3b82f6;
     --edit-btn: #facc15;
     --delete-btn: #ef4444;
+    --read-btn: #10b981;
   }
 
   body.dark-mode {
@@ -22,10 +22,10 @@
     --add-btn: #2563eb;
     --edit-btn: #fbbf24;
     --delete-btn: #dc2626;
+    --read-btn: #059669;
     background-color: #111827;
   }
 
-  /* Background & body */
   body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
@@ -47,196 +47,40 @@
     transition: background-color 0.3s;
   }
 
-  h1 {
-    text-align: center;
-    margin: 20px 0;
-    font-size: 2.5rem;
-  }
+  h1 { text-align: center; margin: 20px 0; font-size: 2.5rem; }
+  #toggle-theme { display: block; margin: 0 auto 10px; padding: 8px 15px; font-size: 16px; border-radius: 6px; border: none; cursor: pointer; background-color: var(--add-btn); color: white; transition: background 0.3s; }
+  #toggle-theme:hover { opacity: 0.8; }
 
-  #toggle-theme {
-    display: block;
-    margin: 0 auto 20px auto;
-    padding: 8px 15px;
-    font-size: 16px;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
-    background-color: var(--add-btn);
-    color: white;
-    transition: background 0.3s;
-  }
+  #search-bar { display: block; margin: 10px auto 20px; padding: 8px 15px; font-size: 16px; border-radius: 6px; border: 1px solid #cbd5e1; width: 90%; max-width: 400px; }
 
-  #toggle-theme:hover {
-    opacity: 0.8;
-  }
+  #book-form { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; }
+  #book-form input { padding: 10px; font-size: 16px; border-radius: 6px; border: 1px solid #cbd5e1; flex: 1 1 200px; min-width: 150px; }
+  #book-form button { padding: 6px 10px; font-size: 14px; background-color: var(--add-btn); color: white; border: none; border-radius: 6px; cursor: pointer; transition: background 0.3s; }
+  #book-form button:hover { opacity: 0.8; }
 
-  #book-form {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 30px;
-  }
+  #books-list { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; padding: 0 10px; }
+  li { background: var(--card-bg); border-radius: 10px; padding: 15px 20px; list-style: none; width: 250px; box-shadow: 0 6px 10px rgba(0,0,0,0.15); display: flex; flex-direction: column; gap: 10px; transition: transform 0.2s, background 0.3s; }
+  li:hover { transform: translateY(-3px); }
+  li span { font-size: 16px; color: var(--text-color); }
+  li span.read { text-decoration: line-through; color: gray; }
 
-  #book-form input {
-    padding: 10px;
-    font-size: 16px;
-    border-radius: 6px;
-    border: 1px solid #cbd5e1;
-    flex: 1 1 200px;
-    min-width: 150px;
-  }
+  li button { padding: 4px 8px; font-size: 12px; border: none; border-radius: 5px; cursor: pointer; transition: opacity 0.3s, background 0.3s; margin-right: 4px; }
+  li button.edit { background-color: var(--edit-btn); color: white; }
+  li button.delete { background-color: var(--delete-btn); color: white; }
+  li button.read-btn { background-color: var(--read-btn); color: white; }
 
-  #book-form button {
-  padding: 6px 10px;   /* smaller padding */
-  font-size: 14px;     /* smaller text */
-  background-color: var(--add-btn);
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-#book-form button:hover {
-  opacity: 0.8;
-}
-
-
-  #book-form button:hover {
-    opacity: 0.8;
-  }
-
-  #books-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    padding: 0 10px;
-  }
-
-  li {
-    background: var(--card-bg);
-    border-radius: 10px;
-    padding: 15px 20px;
-    list-style: none;
-    width: 250px;
-    box-shadow: 0 6px 10px rgba(0,0,0,0.15);
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    transition: transform 0.2s, background 0.3s;
-  }
-
-  li:hover {
-    transform: translateY(-3px);
-  }
-
-  li span {
-    font-size: 16px;
-    color: var(--text-color);
-  }
-
-  li button {
-    padding: 5px 10px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: opacity 0.3s, background 0.3s;
-  }
-
-  li button.edit {
-    background-color: var(--edit-btn);
-    color: white;
-  }
-
-  li button.delete {
-    background-color: var(--delete-btn);
-    color: white;
-  }
-
-  /* Modal styles */
-  .modal {
-    display: none; 
-    position: fixed;
-    z-index: 10;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background: rgba(0,0,0,0.5);
-  }
-
-  .modal-content {
-    background: var(--card-bg);
-    margin: 10% auto;
-    padding: 20px;
-    width: 90%;
-    max-width: 350px;
-    border-radius: 10px;
-    position: relative;
-    color: var(--text-color);
-  }
-
-  .modal-content input {
-    width: 100%;
-    padding: 8px;
-    margin: 8px 0;
-    font-size: 16px;
-    border-radius: 6px;
-    border: 1px solid #cbd5e1;
-    background-color: white;
-    color: black;
-  }
-
-  body.dark-mode .modal-content input {
-    background-color: #374151;
-    color: white;
-    border: 1px solid #4b5563;
-  }
-
-  .modal-content button.save {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    margin-top: 10px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    background-color: var(--add-btn);
-    color: white;
-  }
-
-  .modal-content button.save:hover {
-    opacity: 0.8;
-  }
-
-  .close {
-    position: absolute;
-    top: 8px;
-    right: 12px;
-    font-size: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    color: #ef4444;
-  }
+  .modal { display: none; position: fixed; z-index: 10; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background: rgba(0,0,0,0.5); }
+  .modal-content { background: var(--card-bg); margin: 10% auto; padding: 20px; width: 90%; max-width: 350px; border-radius: 10px; position: relative; color: var(--text-color); }
+  .modal-content input { width: 100%; padding: 8px; margin: 8px 0; font-size: 16px; border-radius: 6px; border: 1px solid #cbd5e1; background-color: white; color: black; }
+  body.dark-mode .modal-content input { background-color: #374151; color: white; border: 1px solid #4b5563; }
+  .modal-content button.save { width: 100%; padding: 10px; font-size: 16px; margin-top: 10px; border: none; border-radius: 6px; cursor: pointer; background-color: var(--add-btn); color: white; }
+  .modal-content button.save:hover { opacity: 0.8; }
+  .close { position: absolute; top: 8px; right: 12px; font-size: 20px; font-weight: bold; cursor: pointer; color: #ef4444; }
 
   @media (max-width: 600px) {
-    #books-list {
-      flex-direction: column;
-      align-items: center;
-    }
-
-    li {
-      width: 90%;
-    }
-
-    #book-form {
-      flex-direction: column;
-      align-items: center;
-    }
+    #books-list { flex-direction: column; align-items: center; }
+    li { width: 90%; }
+    #book-form { flex-direction: column; align-items: center; }
   }
 </style>
 </head>
@@ -245,6 +89,7 @@
 <h1>📚 Book Management App</h1>
 
 <button id="toggle-theme" onclick="toggleTheme()">Toggle Dark Mode</button>
+<input type="text" id="search-bar" placeholder="Search by title or author" oninput="searchBooks()">
 
 <div id="book-form">
   <input type="text" id="title" placeholder="Book Title">
@@ -266,25 +111,22 @@
 </div>
 
 <script>
-const API_URL = "/books";
+let books = JSON.parse(localStorage.getItem('books')) || [];
 let editingBookId = null;
 
-// Dark mode toggle
-function toggleTheme() {
-  document.body.classList.toggle("dark-mode");
-}
+// Toggle dark mode
+function toggleTheme() { document.body.classList.toggle("dark-mode"); }
 
-// Fetch and display books
-async function fetchBooks() {
-  const res = await fetch(API_URL);
-  const books = await res.json();
+// Render books
+function renderBooks(filteredBooks = books) {
   const list = document.getElementById("books-list");
   list.innerHTML = "";
-  books.forEach(book => {
+  filteredBooks.forEach(book => {
     const li = document.createElement("li");
     li.innerHTML = `
-      <span><strong>${book.title}</strong><br>by ${book.author}</span>
+      <span class="${book.read ? 'read' : ''}"><strong>${book.title}</strong><br>by ${book.author}</span>
       <div>
+        <button class="read-btn" onclick="toggleRead(${book.id})">${book.read ? 'Unread' : 'Read'}</button>
         <button class="edit" onclick="openModal(${book.id}, '${book.title}', '${book.author}')">Edit</button>
         <button class="delete" onclick="deleteBook(${book.id})">Delete</button>
       </div>
@@ -293,28 +135,34 @@ async function fetchBooks() {
   });
 }
 
-// Add a new book
-async function addBook() {
-  const title = document.getElementById("title").value;
-  const author = document.getElementById("author").value;
-  if (!title || !author) return alert("Enter title and author!");
-  await fetch(API_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ title, author })
-  });
+// Add book
+function addBook() {
+  const title = document.getElementById("title").value.trim();
+  const author = document.getElementById("author").value.trim();
+  if(!title || !author) return alert("Enter title and author!");
+  const id = books.length ? books[books.length-1].id + 1 : 1;
+  books.push({id, title, author, read: false});
+  localStorage.setItem('books', JSON.stringify(books));
   document.getElementById("title").value = "";
   document.getElementById("author").value = "";
-  fetchBooks();
+  renderBooks();
 }
 
 // Delete book
-async function deleteBook(id) {
-  await fetch(`${API_URL}/${id}`, { method: "DELETE" });
-  fetchBooks();
+function deleteBook(id) {
+  books = books.filter(b => b.id !== id);
+  localStorage.setItem('books', JSON.stringify(books));
+  renderBooks();
 }
 
-// Open edit modal
+// Toggle read/unread
+function toggleRead(id) {
+  books = books.map(b => b.id === id ? {...b, read: !b.read} : b);
+  localStorage.setItem('books', JSON.stringify(books));
+  renderBooks();
+}
+
+// Open modal
 function openModal(id, title, author) {
   editingBookId = id;
   document.getElementById("editTitle").value = title;
@@ -323,32 +171,31 @@ function openModal(id, title, author) {
 }
 
 // Close modal
-function closeModal() {
-  document.getElementById("editModal").style.display = "none";
-}
+function closeModal() { document.getElementById("editModal").style.display = "none"; }
 
-// Save changes from modal
-async function saveEdit() {
-  const newTitle = document.getElementById("editTitle").value;
-  const newAuthor = document.getElementById("editAuthor").value;
-  if (!newTitle || !newAuthor) return alert("Enter title and author!");
-  await fetch(`${API_URL}/${editingBookId}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ title: newTitle, author: newAuthor })
-  });
+// Save edit
+function saveEdit() {
+  const newTitle = document.getElementById("editTitle").value.trim();
+  const newAuthor = document.getElementById("editAuthor").value.trim();
+  if(!newTitle || !newAuthor) return alert("Enter title and author!");
+  books = books.map(b => b.id === editingBookId ? {...b, title:newTitle, author:newAuthor} : b);
+  localStorage.setItem('books', JSON.stringify(books));
   closeModal();
-  fetchBooks();
+  renderBooks();
 }
 
-// Close modal if click outside content
-window.onclick = function(event) {
-  const modal = document.getElementById("editModal");
-  if (event.target === modal) closeModal();
+// Search books
+function searchBooks() {
+  const query = document.getElementById("search-bar").value.toLowerCase();
+  const filtered = books.filter(b => b.title.toLowerCase().includes(query) || b.author.toLowerCase().includes(query));
+  renderBooks(filtered);
 }
 
-// Load books on page load
-fetchBooks();
+// Close modal if click outside
+window.onclick = e => { if(e.target === document.getElementById("editModal")) closeModal(); }
+
+// Initial render
+renderBooks();
 </script>
 
 </body>
