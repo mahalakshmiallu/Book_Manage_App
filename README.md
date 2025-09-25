@@ -75,10 +75,14 @@ localStorage for persistence
 
 Folder Structure
 book-management-app/
+
 │
 ├─ index.html      # Main HTML page
+
 ├─ style.css       # CSS styles (optional if inline)
+
 ├─ script.js       # JS logic (optional if inline)
+
 └─ README.md       # Project documentation
 
 Future Improvements
