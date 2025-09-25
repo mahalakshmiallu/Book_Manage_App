@@ -20,7 +20,7 @@ No server or backend is required. Simply follow these steps:
 
 Clone the repository:
 
-git clone https://mahalakshmiallu.github.io/Book_Manage_App-index.html/
+git clone https://mahalakshmiallu.github.io/Book_Manage_App_index.html/
 
 
 Open the project folder:
